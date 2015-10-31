@@ -1,0 +1,474 @@
+    Rozdział 4
+
+    ZGADNIJ LICZBĘ
+
+Tematy omówione w tym rozdziale:
+
+•   Dyrektywa import
+•   Moduły
+•   Argumenty
+•   Dyrektywa while
+•   Warunki
+•   Bloki
+•   Typ logiczny (boolean)
+•   Operatory porównania
+•   Różnica między = i ==
+•   Dyrektywa if
+•   Słowo kluczowe break
+•   Funkcje str() i int()
+•   Funkcja random.randint()
+
+Gra “Zgadnij liczbę”
+
+W tym rozdziale stworzymy grę “Zgadnij numer”. Komputer wymyśli losową liczbę między 1, a 20 i poprosi, byś ją odgadł. Przy każdej próbie komputer powie, czy podana liczba jest za mała, albo zbyt duża. Wygrasz jeśli zgadniesz liczbę do szóstej próby.
+
+To jest dobra gra ponieważ wykorzystuje liczby losowe, pętle i pobiera dane id użytkownika w dość krótkim programie. Nauczysz się jak zmieniać typ wartości (i do czego to można wykorzystać). Ponieważ program jest grą, nazwiemy użytkownika graczem, choć nazwa "użytkownik" też jest prawidłowa.
+
+Przykładowy przebieg gry “Zgadnij liczbę”
+
+Oto co zobaczy gracz który uruchomi grę. Tekst wpisany przez gracza jest pogrubiony.
+
+Cześć! Jak masz na imię?
+Albert
+Dobrze Albert, myślę sobie o liczbie między 1 i 20.
+Spróbuj ją zgadnąć.
+10
+Podałeś za małą liczbę.
+Spróbuj ją zgadnąć.
+15
+Podałeś zbyt dużą liczbę.
+Spróbuj ją zgadnąć.
+12
+Gratuluję Albert! Zgadłeś moją liczbę w 3 próbach!
+
+
+
+Wprowadź ten kod dokładnie tak, jak tu podano i zachowaj go klikając File ► Save As (Plik ► Zapisz jako). Nazwij plik guess.py. Wciśniej F5 by uruchomić program. Nie mart się jeśli nie rozumiesz tego kodu. Wytłumaczę go krok po kroku.
+
+Kod źródłowy zgadywania liczby
+
+Oto kod źródłowy gry “Zgadnij liczbę”. Podczas wpisywanie tego kody w edytorze zwróć uwagę na liczbę spacji na początku niektórych linii. Niektóre linie mają cztery, lub osiem spacji wcięcia (przesunięcia).
+
+WAŻNA UWAGA! Programy z tej książki da sie uruchomić tylko w Pythonie 3, a nie w Pythonie 2. Gdy pojawi sie okno IDLE, to na górze pojawi sie tekst “Python 3.4.0”, lub podobnie. Jeśli masz zainstalowanego Pythona 2, to możesz jednocześnie mieć Pythona 3. Aby pobrać Pythona 3, odwiedź https://python.org/download/.
+
+Poniższy kod możesz pobrać z http://invpy.com/pl/guess.py. Jeśli uzyskasz jakiekolwiek błedy po wpisaniu kego kodu porównaj go z kodem z książki za pomocą narzędzia jakie znajdziesz na http://invpy.com/pl/diff/guess.
+
+guess.py
+
+ 1. # To jest gra w zgadywanie liczby
+ 2. import random
+ 3.
+ 4. probyZgadniecia = 0
+ 5.
+ 6. print('Cześć! Jak masz na imię?')
+ 7. mojeImie = input()
+ 8.
+ 9. tajemnaLiczba = random.randint(1, 20)
+10. print('Dobrze ' + mojeImie + ', myślę sobie o liczbie między 1 i 20.')
+11.
+12. while probyZgadniecia < 6:
+13.     print('Spróbuj ją zgadnąć.') # Na początku linii są cztery spacje.
+14.     podanaLiczba = input()
+15.     podanaLiczba = int(podanaLiczba)
+16.
+17.     probyZgadniecia = probyZgadniecia + 1
+18.
+19.     if podanaLiczba < tajemnaLiczba:
+20.         print('Podałeś za małą liczbę.') # Na początku linii jest osiem spacji.
+21.
+22.     if podanaLiczba > tajemnaLiczba:
+23.         print('Podałeś zbyt dużą liczbę.')
+24.
+25.     if podanaLiczba == tajemnaLiczba:
+26.         break
+27.
+28. if podanaLiczba == tajemnaLiczba:
+29.     probyZgadniecia = str(probyZgadniecia)
+30.     print('Gratuluję ' + mojeImie + '! Zgadłeś moją liczbę w ' + probyZgadniecia + ' próbach!')
+31.
+32. if podanaLiczba != tajemnaLiczba:
+33.     tajemnaLiczba = str(tajemnaLiczba)
+34.     print('Niestety. Numer o jakim myślałem to ' + tajemnaLiczba)
+
+Przyjrzyjmy się każdej linii kodu by zobaczyc jak ten program działa.
+
+Dyrektywa import
+
+1. # To jest gra w zgadywanie liczby
+2. import random
+
+Pierwsza linia to komentarz. Pamiętaj, że Python zignoruje wszystko po znaku #. Ten jest po to, by przypomnieć nam co robi program.
+
+Druga linia to dyrektywa import. Pamiętaj, że dyrektywy są instrukcjami które wykonują jakąś czynność, ale w odróżnieniu od wyrażeń nie są wyliczne do jakiejś wartości. Już widziałeś dyrektywy: dyrektywa podstawienia zachowuje wartość w zmiennej (ale dyrektywa sama w sobie nie jest wyliczana do żadnej wartości).
+
+Choć Python ma wiele wbudowanych funkcji, niektóe funkcje są w oddzielnych programach zwanych modułami. Moduły to programy które zwawierają dodatkowe funkcje. Aby ich używać trzeba zaimportować ich moduły do własnego programu używając dyrektywy import.
+
+Dyrektywa import to słowo kluczowe import i nazwa modułu. Linia 2 importuje moduł o nazwie random. Moduł random zawiera kilka funkcji związanych z liczbami losowymi. Jedna z takich funkcji dostarczy liczby losowej jaką będzie zgadywał użytkownik programu.
+
+4. probyZgadniecia = 0
+
+Ta linia tworzy nową zmienną o nazwie probyZgadniecia. Zapiszesz w niej ile razy użytkownik próbował zgadnąć liczbę. Na razie użytkownik jeszcze nie próbował, więc zapiszemy tam 0.
+
+6. print('Cześć! Jak masz na imię?')
+7. mojeImie = input()
+
+Linia 6 i 7 są takie same jak linie w programie "Witaj świecie" z rozdziału 3. Programiści częst używają kodu z ich innych programów by zaoszczędzić nieco pracy.
+
+Linia 6 to wywołanie funkcji print(). Pamiętaj, że funkcja to taki mini-program w środku twojego programu. Kiedy twój program wywołuje funkcję, uruchamia ten mini-program. Kod w środku funkcji print() wyświetla podany napis na ekranie.
+
+Linia 7 pozwala użtkownikowi na podanie swojego imienia i zapisuje je w zmiennej mojeImie. (Pamiętaj, że podane imię noże nie być prawdziwym imieniem gracza. To może być dowolny tekst podany przez użytkownika. Komputery są tępe i po prostu robią to im się każe .)
+
+Funkcja random.randint()
+
+ 9. tajemnaLiczba = random.randint(1, 20)
+
+Linia 9 wywołuje nową funkcję o nazwie randint() i zapisuje liczbę, jaką ta funkcja zwraca. Pamiętaj, że wywołania funkcji mogą być częśćią wyrażeń ponieważ są wyliczane do wartości.
+
+Ponieważ funkcja randint() jest w module random należy poprzedzić ją random. (nie zapomnij o kropce!), by powiedzieć Pythonowi że funkcja randint() jest w module random.
+
+Funkcja randint() zwraca liczbę całkowitą pomiędzy (i włączając) dwoma przekazanymi jako argumenty. W linii 9 między nawiasami jakie są po nazwie funkcji mamy 1 i 20 oddzielone przecinkiem. Losowa liczba zwracana przez randint() jest zapisywana z w zmiennej tajemnaLiczba; to jest tajemnicza liczba jaką gracz będzie próbował zganąć.
+
+Na chwilkę wróć do interaktywnej powłoki i wpis import random by zaimportować moduł random. Potem wprowadź random.randint(1, 20), by zobaczyć co ta funkcja zwróci. Będzie zwracała liczby całowite pomiędzy 1 i 20. Powtórz ten kod i wywołanie funkcji prawdopodobnie zwróci inną liczbę. Funkcja randint() zwraca jakąś liczbę losową podobniej jak rzuty kostką do grania za każdym razem zwracają liczbę losową.
+
+>>> import random
+>>> random.randint(1, 20)
+12
+>>> random.randint(1, 20)
+18
+>>> random.randint(1, 20)
+3
+>>> random.randint(1, 20)
+18
+>>> random.randint(1, 20)
+7
+
+Uzyj funkcji randint() kiedy potrzebujesz losowości w swojej grze. W większości gier użyjesz losowości. Pomyśl jak wiele gier planszowych używa kostek.
+
+Możesz także spróbować z różnymi zakresami liczb przez zmianę argumentów. Przykładowo wpisz random.randint(1, 4) i będziesz dostawał jedynie liczby całowite z zakresu od 1 do 4 (włączając zarówno 1 jak i 4). Spróbuje też random.randint(1000, 2000) by uzyskać liczby całkowite pomiędzy 1000 i 2000. Przykładowo wprowadź w interaktywnej powłoce następujący kod. Wyniki jakie uzyskasz wywołując random.randint() prawdodpodobnie będę inne (w końcu są losowe).
+
+>>> random.randint(1, 4)
+3
+>>> random.randint(1000, 2000)
+1294
+
+Możesz lekko zmienić kod gry, by gra zachowywała się nieco inaczej. Spróbuj zmienić linię 9 i 10 z:
+
+ 9. tajemnaLiczba = random.randint(1, 20)
+10. print('Dobrze ' + mojeImie + ', myślę sobie o liczbie między 1 i 20.')
+
+…na te linie:
+
+ 9. tajemnaLiczba = random.randint(1, 100)
+10. print('Dobrze ' + mojeImie + ', myślę sobie o liczbie między 1 i 100.')
+
+
+Teraz komputer będzie myślał o liczbie pomiędzy 1 i 100, zamiast 1 i 20. Zmiana w linii 9 zmieni zakres liczby losowej, ale pamiętaj by zmienić także linię 10 by gra pokazywała graczowi nowy zakres zamiast starego.
+
+Przywitanie gracza
+
+10. print('Dobrze ' + mojeImie + ', myślę sobie o liczbie między 1 i 100.')
+
+W linii 10 funkcja print() wita gracza używając jefo imienia i mówi, że komputer wymyślił liczbę losową.
+
+Wydawać się może, że w linii 10 jest więcej niż jeden argumen, ale spójrz na nią uważnie. Znak plus łączy trzy napisy i tworzy z nich jeden napis. To właśnie jest pojedynczym argumentem napisowym przekazanym do funkcji print(). Jak przyjrzysz się bliżej, to zobaczysz, że przecinki są wewnątrz znaków cytowania i są częścią napisów.
+
+Pętle
+
+12. while probyZgadniecia < 6:
+
+Linia 12 jest dyrektywą while, która oznacza początek pętli while. Pętle pozwalają na wykonywanie kodu wiele razy. Jednak najpierw musisz nauczyć się kilku innych rzeczy nim nauczysz się o pętlach. Te rzeczy to bloki kodu, wartości typu logicznego (ang: boolean o wartości prawda, lub fałsz), operatory porównania, warunki i dyrektywa while.
+
+Bloki kodu
+
+Kilka linii kodu może być pogrupowane razem w kod bloku. Blok kodu ma taki same minimalną wielkość wcięcia. Możesz powiedzieć gdzie blok się zaczyna i kończy potrząc na liczbę spacji na początku linii. Te spacje to właśnie wcięcie linii.
+
+Blok kodu zaczyna się, gdy zwiększa się wcięcie (zwykle przez użycie czterech spacji). Każda kolejna linia która jest wcięta za pomocą czterech spacji jest częścią tego bloku kodu. Blok ten kończy się, gdy wcięcie wraca do poziomu sprzed rozpoczęcia bloku. To oznacza, że w danym bloku kodu mogą istnieć inne bloki kodu.
+
+Rysunek 4-1 to diagram kodu w blokach outlined and numbered. Spacje są oznaczone czarnymi prostokątami by było je łatwiej zliczyć.
+
+
+
+Rysunek 4-1: Bloki i ich wcięcia. Czarne kropki oznaczają spacje.
+
+Na rysunku 4-1, linia 12 nie ma wcięcia i nie jest w żadnym bloku. Linia 13 ma wcięcie z czterech spacji. Ponieważ wcięcie to jest większe niż wcięcie w poprzedniej linii, to znaczy, że zaczął się nowy blok kodu. Ten blok jest oznaczony (1) na rysunku 4-1. Ten blok będzie kontynuowany aż do linii bez spacji na początku (oryginalna wielkość wcięcia nim zaczął się blok). Puste linie są ignorowane.
+
+Linia 20 ma wcięcie z ośmiu spacji. To więcej niż cztery spacje, więc zaczyna to nowy blok. Then blok jest oznaczony (2) na rysunku 4-1. Ten blok jest we wnętrzu innego bloku.
+
+Linia 22 ma tylko cztery spacje. Ponieważ wielkość wcięcia się zmniejszyła, wiemy, że blok się zakończył. Linia 20 jest jedyną linią tego bloku. Linia 22 jest w tym samym bloku co inne linie mające cztery spacje wcięcia.
+
+Linia 23 zwiększa wcięcie do ośmiu spacji, więc znowy zaczął się nowy blok. Jest on oznaczony (3) na rysunku 4-1.
+
+Dla przypomnienia, linia 12 nie jest w żadnym bloku. Linie od 13 do 23 są w tym samym bloku (oznaczonym jako blok 1). Linia 20 jest w bloku w bloku (oznaczonym jako blok 2). A linia 23 jest jedyną linią kolejnego bloku w bloku (oznaczonego jako blok 3).
+
+Typ logiczny (ang. boolean)
+
+Typ logiczny (ang. boolean) ma tylko dwie wartości: prawda (ang. True), lub fałsz (ang. False). Te wartości wpisujemy po angielsku z użyciem dużej litery na początku. Resztę wpisujemy małymi literami. Będziesz używał wartości logicznych z operatorami porównywania by tworzyć warunki. Warunki będą omówione później.
+
+Jak na razie zostałeś wprowadzony do typów liczb całkowitych, liczb zmiennoprzeninkowych, napisów i teraz typu logicznego.
+
+Operatory porównania
+
+Linia 12 ma dyrektywę while:
+
+12. while probyZgadniecia < 6:
+
+Wyrażenie które następuje po słowie kluczowym while (część probyZgadniecia < 6) zawiera dwie wartości (wartość w zmiennej probyZgadniecia i liczbę całkowitą 6) połączone operatorem (znak <, czyli znak “mniejsze niż”). Znak < jest nazywany operatorem porównania.
+
+Operatory porównania porównują dwie wartości i wyliczają z nich prawdę, lub fałsz (wartości logiczne True, lub False). Lista wszystkich operatorów porównania jest w tabeli  4-1.
+
+Tabela 4-1: Operatory porównania.
+Znak operatora      Nazwa operatora
+<                   Mniejsze niż
+>                   Większe niż
+<=                  Mniejsze niż, lub równe z
+>=                  Większe niż, lub równe z
+==                  Równe z
+!=                  Różne od
+
+Czytałeś już o operatorach matematycznych: +, -, * i /. Podobnie do innych operatorów, operatory porównania robią operacje z wartościami by zbudować wyrażenie takie jak probyZgadniecia < 6.
+
+Warunki
+
+Warunek to wyrażenie składające się z dwóch wartości z operatorem porównania (takim jak <, lub >) i który zostaje wyliczony do wartości logicznej. Warunek jest po prostu inną nazwą na wyrażenie jakie zostanie wyliczone do wartości True, lub False. Warunki są używane w dyrektywach while (i w kilku innych miejscach, ale o tym później).
+
+Przykładowo, wyrażenie probyZgadniecia < 6 pyta, “czy wartość zapisana w probyZgadniecia jes mniejsza niż liczba 6?” Jeśli tak, to wyrażenie daje wartość True (prawda). Jeśli nie, to wyrażenie daje wartość False (fałsz).
+
+W przypadku programu “Zgadnij numer”, w linii 4 zapisałeś wartość 0 do zmiennej probyZgadniecia. Ponieważ 0 jest mniejsze niż 6, to to wyrażenie daje wartość logiczną True. The wyliczanie wygląda tak:
+
+probyZgadniecia < 6
+                ▼
+              0 < 6
+                ▼
+              True
+
+Eksperymenty z wartościami logicznymi, operatorami porównania i warunkami
+
+Wprowadź następujące wyrażenia w interaktywnej powłoce by sprawdzić ich wyniki jako wartości logiczne:
+
+>>> 0 < 6
+True
+>>> 6 < 0
+False
+>>> 50 < 10
+False
+>>> 10 < 11
+True
+>>> 10 < 10
+False
+
+Warunek 0 < 6 zwraca wartość logicznną True ponieważ liczba 0 jest mniejsza niż liczba 6. Ale ponieważ 6 nie jest mniejsze od 0, to warunek 6 < 0 wylicza się do False. 50 nie jest mniejsze od 10, więc 50 < 10 daje False. 10 jest mniejsze od 11, więc 10 < 11 daje True.
+
+Zauważ, że 10 < 10 daje False ponieważ 10 nie jest mniejsze od 10. One są równe. Jeśli Alicja jest tak samo wysoka jak Franek, to nie powiesz, że Alicja jest wyższa od Franka, albo że Alicja jest niższa od Franka. Oba te wyrażenia są fałszywe.
+
+Teraz spróbuj wprowadzić kolejne wyrażenia w interaktywnej powłoce:
+
+>>> 10 == 10
+True
+>>> 10 == 11
+False
+>>> 11 == 10
+False
+>>> 10 != 10
+False
+>>> 10 != 11
+True
+>>> 'Hello' == 'Hello'
+True
+>>> 'Hello' == 'Goodbye'
+False
+>>> 'Hello' == 'HELLO'
+False
+>>> 'Goodbye' != 'Hello'
+True
+
+Nie należy mylić operatora podstawienia (=) i operatora “równe z” (==). Znak równości (=) jest używany w dyrektywach podstawienia by zapisać wartość w zmiennej, podczas gdy podwójny znak równości (==) jest używany w wyrażeniach, by sprawdzić, czy dwie wartości są równe. Łatwo pomyłkowo użyć jednego z nich, gdy naprawdę chce się użyc drugiego.
+
+Po prostu pamiętaj, że operator “równe z” (==) używa dwóch znaków, podobnie jak operator “różne od” (!=), który również używa dwóch znaków.
+
+Napisy i liczby całkowite nie będą równe. Sprawdź to wpisując następujący kod w powłoce interaktywnej:
+
+>>> 42 == 'Hello'
+False
+>>> 42 != '42'
+True
+
+Pętle używające dyrektywy while
+
+Dyrektywa while oznacza początek pętli. Pętle wykonują ten sam kawałek kodu wielokrotnie. Kiedy wykonanie programu dojdzie do dyrektywy while, to sprawdzany jest warunek wpisany zaraz po słowie kluczowym while. Jeśli ten warunek zwróci True, to wykoananie wchodzi do wnętrza bloku while (w twoim programie blok while zaczyna się w linii 13). Jeśli warunek zwróci False, to wykonanie przejdzie poza blok while (w “Zganij numer” pierwsza linia za blokiem while to linia 28).
+
+Dyrektywa while zawsze ma dwukropek (znak : ) za warunkiem.
+
+12. while probyZgadniecia < 6:
+
+
+
+Rysunek 4-2: Warunek pętli while
+
+Rysunek 4-2 pokazuje jak w zależności od warunku przebiega wykonanie kodu. Jeśli warunek zwraca True (co dzieje sie za pierwszym razem, ponieważ wartość probyZgadniecia wynosi 0), wykonanie wejdzie do bloku while w linii 13 i do kolejnych linii. Jak tylko program dotrze do końca bloku while, to zamiast iść dalej, do kolejnej linii, program zapętli się, wróci do linii z dyrektywą while (linia 12) i pownownie sprawdzi warunek. Podobnie jak wcześniej, jeśi warunek zwróci True wykonanie wchodzi do bliku while. Każde wykonanie kodu w pętli nazwyamy iteracją.
+
+W ten sposób działają pętle. Jak długo warunek jest spełniony (zwraca True), program będzie wykonywał kod we wnętrzu bloku while, a zakończy gdy pierwszy raz warunek przestanie być spełniany (zwróci False). Myśl o  dyrektywie while jako: “dopóki warunek jest spełniony wykonuj kod w tym bloku”.
+
+Kod wewnątrz bloku while obsługuje pobieranie zgadywanych liczb od użytkownika i sprawdzanie, czy podana liczba jest większa, mniejsza, czy równa tajemnej liczbie. Możesz zmienić trudność gry zmieniając liczbę możliwych prób zgadywania. Aby dać graczowi tylko cztery szanse zmień linię:
+
+12. while probyZgadniecia < 6:
+
+w linię:
+
+12. while probyZgadniecia < 4:
+
+Kod w bloku while w każdej iteracji zwiększa zmienną probyZgadniecia o 1. Ustawiając warunek probyZgadniecia < 4 sprawisz, że kod wewnątrz pętli wykona się cztery razy, a nie sześć. To sprawi, że gra będzie trudniejsza. Aby zrobić ją łatwiejszą ustaw warunek naprobyZgadniecia < 8, lub probyZgadniecia < 10. To sprawi, że pętla wykona się kilka razy więcej i przyjmie więcej prób zgadnięcia od gracza.
+
+Oczywiście jeśli usuniesz linię 17 (probyZgadniecia = probyZgadniecia + 1) to zmienna probyZgadniecia nigdy nie zostanie zwiększona. Warunek pętli while zawsze będzie spełniony (True)! To da graczowi nielimitowaną liczbę prób zgadnięcia. Graczowi może się to podobać, ale programista uważa to za błąd (ang. bug).
+
+Próby zgadniecia
+
+W liniach od 13 do 17 program prosi o odgadnięcie tajemniczej liczby i pozwala graczowi na jej wprowadzenie. Podana liczba jest zapisywana z zmiennej o nazwie podanaLiczba.
+
+13.    print('Spróbuj ją zgadnąć.') # Na początku linii są cztery spacje.
+14.    podanaLiczba = input()
+
+Zamiana napisów na liczby całkowte za pomocą funkcji int()
+
+15.     podanaLiczba = int(podanaLiczba)
+
+W linii 15 wywołana jest nowa funkcja o nazwie int(). Funkcja int() pobiera jeden argument i zwraca liczbę całkowitą odpowiadającą argumentowi. TSpróbuj wprowadzić następujące rzeczy w powłoce interaktywnej:
+
+>>> int('42')
+42
+>>> int(42)
+42
+>>> int('forty-two')
+Traceback (most recent call last):
+  File "<pyshell#5>", line 1, in <module>
+int('forty-two')
+ValueError: invalid literal for int() with base 10: 'forty-two'
+>>> 3 + int('2')
+5
+
+Wywołanie int('42') zwróci liczbę całkowitą 42. Wywołanie int(42) zrobi to samo (choć nie ma sensu pobieranie wartości całkowitej z wartości całkowitej). Jednak choć możesz funkcji int() przekazać napis, to nie możesz przekazać dowolnego napisu. Przekazanie 'forty-two' (ang.czterdzieści-dwa) do funckji int() zwróci błąd. Napis jaki przekazujesz do funkcji int() musi składać się z liczby.
+
+Linia z 3 + int('2') pokazuje wyrażenie które używa wartośc zwracanej przez int() jako części wyrażenia. Zostanie to wyliczone do wartości całkowitej 5:
+
+3 + int('2')
+  ▼
+3 + 2
+  ▼
+  5
+
+Pamiętaj, że funkcja input() zwraca napis wpisany przez gracza. Jeśli gracz wpisze 5, funkcja input() function zwróci napis o wartości '5', a nie wartość całkowitą 5. Python nie może używać operatorów porównania < i > by porówywać napisy i liczby całkowite:
+
+>>> 4 < '5'
+Traceback (most recent call last):
+  File "<pyshell#0>", line 1, in <module>
+    4 < '5'
+TypeError: unorderable types: int() < str()
+
+W linii 14 zmiennna podanaLiczba zawiera napis jaki wpisał gracz. W linii 15 jest to nadpisywane przez liczbę całkowitą zwróconą przez funkcję int(). To pozwoli na późniejsze porównywanie, czy podana liczba jest większa, mniejsza, czy równa tajemniczej liczbie w zmiennej tajemnaLiczba. Python nie może porównywac napisów i liczb całkowitych by sprawdzić, czy jeden jest większy od drugiego, nawet gdy napisem jest '5'.
+
+Jeszcze jedna rzecz: wywołanie int(podanaLiczba) nie zmieni wartości w zmiennej podanaLiczba. Kod int(podanaLiczba) jest wyrażeniem które wylicza do liczby całkowitej napis zapisany w zmiennej podanaLiczba. To, co zmienia zmienną podanaLiczba jest wyrażenie podstawienia: podanaLiczba = int(podanaLiczba)
+
+Inkrementacja zmiennych
+
+17.     probyZgadniecia = probyZgadniecia + 1
+
+Jak tylko gracz poda propozycję liczby, to licznik prób odgadywania zostanie zwiększony o jeden.
+
+W pierwszej iteracji pętli zmienna probyZgadniecia miała wartość 0. Python weźmie ją i doda do niej 1. 0 + 1 da nam 1, które zostanie zapisane jako nowa wartość zmiennej probyZgadniecia. Pomyśl o linii 17 tak: “zmienna probyZgadniecia powinna mieć wartość o jeden większą od swojej aktualnej wartości”.
+
+Dodawanie jedynki do zmiennej całkowitej lub zmiennoprzecinkowej jest nazywany inkrementacją zmiennej. Odejmowanie jedynki od zmiennej całkowitej lub zmiennoprzecinkowej jest nazywane dekrementacją zmiennej.
+
+Dyrektywy if
+
+Czy liczba podana przez gracza jest zbyt mała?
+
+19.     if podanaLiczba < tajemnaLiczba:
+20.         print('Podałeś za małą liczbę.') # Na początku linii jest osiem spacji.
+
+Linia 19 sprawdza, czy liczba podana przez gracza jest mniejsza niż tajemna liczba wylosowana przez komputer. Jeśli tak jest, to wykonanie przechodzi do linii 20 i wypisuje komunikat graczowi. Linia 19 to derektywa if. Wykonanie przejdzie do kodu w bloku pod dyretywą if, jeśli warunek po if będzie spełniony (da True). Jeśli warunek nie będzie spełniony (da False), to kod w bloku-if zostanie ominięty. Używając dyrektyw if sprawiasz, że program uruchomi pewien kod tylko wtedy, gdy tego chcesz.
+
+Dyrektywa if działa prawie tak samo jak dyrektywa while. Jednak w odróżnieniu od bloku while, po dotarciu do końca blobu if wykonanie nie skacze na początek, do dyrektywy if. Wykonanie przechodzi po prostu do następnej linii. Innymi słowy dyrekrywa if nie zapętla się. Na rysuneku 4-3 pokazane jest porównanie tych dyrektyw.
+
+
+
+Rysunek 4-3: dyrekrywy if i while.
+
+Czy liczba podana przez gracza jest zbyt duża?
+
+22.     if podanaLiczba > tajemnaLiczba:
+23.          print('Podałeś zbyt dużą liczbę.')
+
+
+Linia 22 sprawdza, czy liczba podana przez gracza jest większa niż tajemna liczba. Jeśli te sprawdzenia da True, wtedy funkcja print() powie użytkownikowo, że jego liczba jest zbyt duża.
+
+Wcześniejsze opuszczenie pętli za pomocą dyrektywy break
+
+25.     if podanaLiczba == tajemnaLiczba:
+26.         break
+
+
+Dyrektywa if w linii 25 sprawdza, czy podana liczba jest równa tajmnej liczbue. Jeśli jest, to porogeam wykonuje dyrekktywę break z linii 26.
+
+Dyrektywa break sprawie, że wykonanie wyskakuje natychmiastowo z bloku whule i wychodzi do pierwszej linii za tym blokiem (dyrektywa break nie zawraca sobie głowy sprawdzaniem warunku while, po prostu natycmiastowo wychodzi z pętli).
+
+Dyrektywa break to samo słowo kluczowe break, bez żadnych warunków, ani dwukropków.
+
+Jeśli liczba podana przez gracza nie jest róna tajemnej liczbie wykonanie dochodzi do końca bloku while. To oznacza, że wykonanie zapętla się i wraca na górę by ponownie sprawdzić warunej z linii 12 (probyZgadniecia < 6). Pamiętaj, że po wykonaniu kodu probyZgadniecia = probyZgadniecia + 1, nowa wartość probyZgadniecia to 1. Ponieważ 1 < 6 daje True, wykonanie znowu wchodzi do pętli.
+
+Jeśli liczby podawane przez gracza będą zbyt małe, lub zbyt duże, to wartość probyZgadniecia zmieni się na 2, potem na 3, na 4, na 5, na 6. Kiedy probyZgadniecia będzie miało wartość 6, warunek while da False, ponieważ 6 nie jest mniejsze od 6. Ponieważ warunek while dał False, wykonanie przechodzi do pierwszej linii za blokiem while.
+
+Jeśli gracz zgadł liczbę, dyrektywa break przeniesie wykonanie do pierwszej linii za blokiem while.
+
+Pozostałe linie kodu zostaną wykonane po tym jak gracz zakończył zgadywanie gdyż podał prawidłową liczbę, lub skończył sie limit prób zgadywania.
+
+Sprawdzenie, czy gracz wygrał
+
+28. if podanaLiczba == tajemnaLiczba:
+
+Linia 28 nie ma wcięcia, co oznacza, że skończył się tu blok while i jest ti pierwsza linia za tym blokiem. Wykonanie opuściło blok while gdyż ablo warunek w dyrektywie while dał False (kiedy gracz wyczerpał limit prób zgadywania), albo wykonała się dyrektywa break (kiedy gracz podał prawidłową liczbę). Linia 28 sprawdza, czy gracz podał prawidłową liczbę. Jeśli tak, to wykonanie przechodzi do bloku id w linii 29.
+
+29.     probyZgadniecia = str(probyZgadniecia)
+30.     print('Gratuluję ' + mojeImie + '! Zgadłeś moją liczbę w ' + probyZgadniecia + ' próbach!')
+
+Linie 29 i 30 wykonają się jedynie jeśli warunek w dyrektywie if z linii 28 zwrócił True (czyli jeśli gracz zgadł liczbę wylosowaną przez komputer).
+
+Linia 29 wywołuje nową funkcję str(), która zwraca napisową formę swojego argumentu. Ten kod daje napisową formę liczby całkowitej ze zmiennej probyZgadniecia, jako że tylko napisy mogą być łączone z innymi napisami.
+
+Linia 30 łączy napisy by powiedzieć graczowi że wygrał i w ilu próbach mu się to udało. Tylko napisy mogą się łączyć z innymi napisami. Z tego powodu w linii 29 zmienna probyZgadniecia musiała byc zmieniona na formę napisową. Próba łączenia napisu z liczbą całkowitą spowodowałaby zgłoszenie błędu przez Pythona.
+
+Sprawdzenie, czy gracz przegrał
+
+32. if podanaLiczba != tajemnaLiczba:
+
+
+Linia 32 używa operatora porówania != by sprawdzić, czy ostatnia liczba podana przez gracza nie jest równa tajemnej liczbie. Jeśli ten warunek będzie spełniony (da True) wykonanie przejdzie do bloku if w linii 33.
+
+Linie 33 i 34 34 są wewnątrz bloku if i wykonają się tylko jeśli warunek z linii 32 był spełniony (dał True).
+
+33.     tajemnaLiczba = str(tajemnaLiczba)
+34.     print('Niestety. Numer o jakim myślałem to ' + tajemnaLiczba)
+
+W tym bloku program pokazuje graczowi tajną liczbę którą graczowi nie udało się zgadnąć. To wymaga łączenia napisów, ale tajemnaLiczba to zmienna całkowita. W linii 33 zostanie zastąpiona swoją formą napisową by można ją było połączyć z napisem 'Niestety. Numer o jakim myślałem to ' w linii 34.
+
+W tym momencie wykonanie doszło do końca kodu i program się zakończył. Gratulacje! Właśnie napisałeś swój pierwszy program!
+
+Dyrektywy sterujące
+
+W poprzednich rozdziałach wykonanie programu zaczęłą się od góry i szło prosto w dół wykonując każdą instrukcję po kolei. Ale dyrektywami while, if, else i break możesz powodować, że wykonanie będzie zapętlone i omijać instrukcje w zależności od warunków. Tego typu dyrektywy nazywamy dyrektywami sterującymi, ponieważ sterują przepływem wykonania programu przenosząc się w rózne jego części.
+
+Podsumowanie
+
+Jeśli ktoś zapyta cię: “Czym dokładnie jest programowanie?”, to co możesz mu odpowiedzieć? Programowanie to pisanie kodu programów, czyli tworzenie programów wykonywanych przez komputer.
+
+“Ale czym dokładnie jest program?” Kiedy widzisz kogoś używającego program komputerowy (na przykład grającego w twoją grę “Zgadnij liczbę”), wszystko co widzisz to jakiś tekst pojawiający sie na ekranie. Program decyduje jaki dokładnie napis pokazac na ekranie (czasem mówimy o urządzeniu wyjściowym programu), a robi to na podstawie instrukcji i danych wpisanych przez gracza na klawiaturze (czasem mówimy o urządzeniu wejściowym). Program to zbiów instrukcji które działają na danych wejściowych dostarczonych przez użytkownika.
+
+“Jakiego rodzaju są te instrukcje?” Tak naprawdę jest tylko kilka rodzajów takich instrukcji.
+
+1.  Wyrażenia. Wyrażenia są wartościami połączonymi operatorami. Wszystkie wyrażenia są wyliczane do pojedynczej wartości tak jak 2 + 2 wyliczane jest do 4, albo 'Witaj' + ' ' + 'świecie' daje 'Witaj świecie'. Kiedy wyrażenie jest zaraz po słowie kluczowym if, lub while, nazywame je tekże warunkami.
+2.  Dyrektywa podstawienia. Dyrektywy podstawienia zapisują zapisują wartości z zmiennych tak, by korzystać z nich później.
+3.  Dyrektywy sterujące if, while i break. Dyrektywy sterujące przepływem moga powodować ominięcie instrukcji, wykonywać instrukcje w pętli, albo przerywać pętle. Także wywołania funkcji zmieniają przepływ wykoanania przez skok na początek funkcji.
+4.  Funkcje print() i input(). Te funkcje wyświetlają napisy na monitorze i pobierają napisy z klawiatury. Nazwya się to operacjami wejścia-wyjścia (ang. operacje I/O od input-output wymawiane ajou), ponieważ zajmują się obsługą wejścia i wyjścia programu.
+
+I to tyle, tylko cztery rzeczy. Oczywiście jest jeszcze wiele szczegółów do tych czterech typów instrukcji. W tej książcenauczysz się o typach danych i operatorach, poznasz nowe dyrektywy sterujące i wiele innych funkcji jakie są dostępne w Pythonie. Istnieją także inne typy operacji wejścia-wyjścia (agn. I/O) takie jak odczyt położenia myszki, czy ogrywanie muzyki, albo drukowanie obrazów zamiast wypisywania napisów.
+
+Dla osoby używającej twoich programów jedyną rzeczą o jaką się martwią jest ta ostatnia rzecz: wejście-wyjście. Użytkownik wpisuje coś na klawiaturze i wtedy widzi rzeczy dziejące sie na ekrania, albo słyszy dżwięk z głośników. Ale komputer by wyświetlić odpowiedni rysunek, albo odegrać odpowiednią muzyję potrzebuje programu, a programy to zestawy instrukcji jakie ty, programista napisałeś.
+
